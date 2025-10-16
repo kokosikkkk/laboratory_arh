@@ -34,10 +34,10 @@ make_files(){
 }
 
 test(){ # 70%
-    NAME=$MOUNT_POINT
-    OCCUPANCY_THRESHOLD="$1"
-    COUNT_FILE="$2"
-    SIZE_FILE="$3"
+    NAME="$1"
+    OCCUPANCY_THRESHOLD="$2"
+    COUNT_FILE="$3"
+    SIZE_FILE="$4"
 
     echo "Тест запущен"
     
@@ -51,17 +51,22 @@ test(){ # 70%
 
 echo "ТЕСТ 1"
 echo "=== Диск не переполнен ==="
-test 20 1 1M
+test $MOUNT_POINT 20 1 1M
 
 echo "ТЕСТ 2"
 echo "=== Диск переполнен ==="
-test 70 8 100M
+test $MOUNT_POINT 70 8 100M
 
 echo "ТЕСТ 3"
 echo "=== Памяти в диске хватает для архивации ==="
-test 70 8 88M
+test $MOUNT_POINT 70 8 88M
 
 echo "ТЕСТ 4"
-echo "=== Введены некорректные данные ==="
-test kkkkk 8 10M
+echo "=== Введены некорректные данные (память) ==="
+test $MOUNT_POINT kkkkk 8 10M
+
+echo "ТЕСТ 5"
+echo "=== Введены некорректные данные (путь) ==="
+test kkkkk 70 8 10M
+
 
